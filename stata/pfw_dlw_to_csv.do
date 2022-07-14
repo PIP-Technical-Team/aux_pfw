@@ -11,11 +11,17 @@ foreach pfwdir of local pfwdirs {
 	local pfwvins "`pfwvins', `pfwvin'"
 }
 local pfwvin = max(`pfwvins')
+
+
+if length("`pfwvin'") == 1 {
+	local pfwvin = "0`pfwvin'"
+}
+	
 disp "`pfwvin'"
 
+use "${dlw_dir}/Support_2005_CPI_v`pfwvin'_M/Data/Stata/Survey_price_framework.dta", clear
 
-use "${dlw_dir}/Support_2005_CPI_v0`pfwvin'_M/Data/Stata/Survey_price_framework.dta", clear
-
+gen pfw_id = "CPI_v`pfwvin'_M"
 cap noi datasignature confirm using "pfw", strict
 if (_rc) {
 	datasignature set, reset saving("pfw", replace)
