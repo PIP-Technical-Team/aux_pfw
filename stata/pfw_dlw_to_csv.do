@@ -1,7 +1,8 @@
 
 // make sure you change to wherever the aux_cpi repo is stored in your machine
 // In profile.do I set the global wb_dir in my computer for general use
-cd "${wb_dir}\DECDG\PIP\aux_data\aux_pfw\"
+*cd "${wb_dir}\DECDG\PIP\aux_data\aux_pfw\"
+global auxout c:\Users\wb327173\OneDrive - WBG\Downloads\ECA\GPWG\PIP_repo\
 global dlw_dir "\\wbgfscifs01\GPWG-GMD\Datalib\GMD-DLW\Support\Support_2005_CPI\"
 
 local pfwdirs: dir "${dlw_dir}" dirs "*CPI_*_M", respectcase
@@ -25,8 +26,8 @@ gen pfw_id = "CPI_v`pfwvin'_M"
 cap noi datasignature confirm using "pfw", strict
 if (_rc) {
 	datasignature set, reset saving("pfw", replace)
-  export delimited  "pfw.csv" , replace
-	save "pfw.dta" , replace
+  export delimited  "$auxout\\aux_pfw\\pfw.csv" , replace
+	save "$auxout\\aux_pfw\\pfw.dta" , replace
 }
 
 
